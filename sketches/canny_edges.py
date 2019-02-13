@@ -7,23 +7,33 @@ def main():
     # open webcam
     stream = cv.VideoCapture(0)
 
+    grayscale = False
+
     while True:
         try:
+
             _, frame = stream.read()
 
-            blue_channel = np.zeros(frame.shape, dtype=np.uint8)
-            red_channel = np.zeros(frame.shape, dtype=np.uint8)
-            green_channel = np.zeros(frame.shape, dtype=np.uint8)
+            if grayscale:
+                frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+                canny_edges = cv.Canny(frame, 100, 100)
 
-            blue_channel[:, :, 0] = frame[:, :, 0]
-            green_channel[:, :, 1] = frame[:, :, 1]
-            red_channel[:, :, 2] = frame[:, :, 2]
+            else:
 
-            upper_stack_frame = np.concatenate((frame, red_channel), axis=1)
-            lower_stack_frame = np.concatenate((blue_channel, green_channel), axis=1)
-            stack_frame = np.concatenate((upper_stack_frame, lower_stack_frame), axis=0)
-            stack_frame = cv.resize(stack_frame, None, fx=0.5, fy=0.5, interpolation=cv.INTER_CUBIC)
+                blue_channel = np.zeros(frame.shape, dtype=np.uint8)
+                red_channel = np.zeros(frame.shape, dtype=np.uint8)
+                green_channel = np.zeros(frame.shape, dtype=np.uint8)
 
+                blue_channel[:, :, 0] = frame[:, :, 0]
+                green_channel[:, :, 1] = frame[:, :, 1]
+                red_channel[:, :, 2] = frame[:, :, 2]
+
+                canny_edges = np.zeros(frame.shape, dtype=np.uint8)
+                canny_edges[:, :, 0] = cv.Canny(blue_channel, 100, 100)
+                canny_edges[:, :, 1] = cv.Canny(green_channel, 100, 100)
+                canny_edges[:, :, 2] = cv.Canny(red_channel, 100, 100)
+
+            stack_frame = np.concatenate((frame, canny_edges), axis=1)
             cv.imshow('stack', stack_frame)
 
             if cv.waitKey(1) == ord('q'):
