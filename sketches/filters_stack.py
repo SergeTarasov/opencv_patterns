@@ -26,8 +26,6 @@ def main():
             stack_frame = np.concatenate((upper_stack_frame, lower_stack_frame), axis=0)
             stack_frame = cv.resize(stack_frame, None, fx=0.5, fy=0.5, interpolation=cv.INTER_CUBIC)
 
-
-
             cv.imshow('stack', stack_frame)
 
             if cv.waitKey(1) == ord('q'):
