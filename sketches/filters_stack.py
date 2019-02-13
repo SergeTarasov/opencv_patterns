@@ -37,6 +37,7 @@ def main():
             print('looks like one of the sources is missing. Make sure you typed in the right path.')
             break
 
+    stream.release()
     cv.destroyAllWindows()
 
     return 0
