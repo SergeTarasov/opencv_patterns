@@ -34,7 +34,6 @@ def main():
 
         except ValueError:
             print('an exception occurred. (ValueError)')
-            print('looks like one of the sources is missing. Make sure you typed in the right path.')
             break
 
     stream.release()
