@@ -36,14 +36,14 @@ def main():
             stack_frame = np.concatenate((frame, canny_edges), axis=1)
             cv.imshow('stack', stack_frame)
 
-            if cv.waitKey(1) == ord('q'):
-                print('release')
-                break
-
         except ValueError:
             print('an exception occurred. (ValueError)')
             break
+        
+        if cv.waitKey(1) == ord('q'):
+                break
 
+    print('release')
     cv.destroyAllWindows()
 
 
