@@ -96,9 +96,6 @@ class ProcessImage:
 
     def loop(self, filename=video_name):
 
-        if self:
-            pass
-
         vid = cv.VideoCapture(filename, 0)
         vid.set(cv.CAP_PROP_POS_FRAMES, 0)
         _, frame = vid.read()
