@@ -45,7 +45,8 @@ def main():
     filename_1 = 0
 
     # a video file
-    filename_2 = 'vid.mp4'
+    # filename_2 = 'vid.mp4'
+    filename_2 = 1
 
     print(
         'file_1: ' + ('' if type(filename_1) is not int else 'webcam ') + str(filename_1) + '; ' +
