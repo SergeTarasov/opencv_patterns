@@ -200,15 +200,13 @@ class ProcessImage:
     threshold_distance = 3
     window_capture_name = 'Video Capture'
 
-    MEDIA_ROOT = '../media/'
-
     ref_pt = []
     cropping = False
     temp_updated = False
     frames = []
     image = np.array((10, 10), dtype=np.uint8)
 
-    def __init__(self, filename=video_name):
+    def __init__(self, filename=0):
         self.filename = filename
         self.vid = cv.VideoCapture(filename, 0)
         self.vid.set(cv.CAP_PROP_POS_FRAMES, 0)
@@ -220,7 +218,7 @@ class ProcessImage:
         height, width = self.image.shape[:2]
         self.vid_out = cv.VideoWriter(
             '../media/output/test_multiple_targets_from_frame/' +
-            filename.split('/')[-1].split('.')[0] + '_tracking.avi',
+            filename.split('/')[-1].split('.')[0] if type(filename) != int else 'out' + '_tracking.avi',
             0,
             fourcc,
             30,
