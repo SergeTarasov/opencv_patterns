@@ -17,15 +17,22 @@ def show_stack(stream_1, stream_2, axis=1):
 
     while True:
         try:
+
+            if cv.waitKey(10) == ord('q'):
+                print('release')
+                break
+
             _, frame_1 = stream_1.read()
             _, frame_2 = stream_2.read()
 
-            stack_frame = np.concatenate((frame_1, frame_2), axis=axis)
-            cv.imshow('stack', stack_frame)
+            print('frame_1', frame_1.shape)
+            print('frame_2', frame_2.shape)
 
-            if cv.waitKey(1) == ord('q'):
-                print('release')
-                break
+            cv.imshow('frame_1', frame_1)
+            cv.imshow('frame_2', frame_2)
+
+            # stack_frame = np.concatenate((frame_1, frame_2), axis=axis)
+            # cv.imshow('stack', stack_frame)
 
         except ValueError:
             print('an exception occurred. (ValueError)')
@@ -42,11 +49,11 @@ def show_stack(stream_1, stream_2, axis=1):
 def main():
 
     # webcam
-    filename_1 = 0
+    filename_1 = 1
 
     # a video file
-    # filename_2 = 'vid.mp4'
-    filename_2 = 1
+    filename_2 = 'vid.mp4'
+    # filename_2 = 1
 
     print(
         'file_1: ' + ('' if type(filename_1) is not int else 'webcam ') + str(filename_1) + '; ' +

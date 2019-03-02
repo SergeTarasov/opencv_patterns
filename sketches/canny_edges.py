@@ -5,7 +5,7 @@ import cv2 as cv
 def main():
 
     # open webcam
-    stream = cv.VideoCapture(0)
+    stream = cv.VideoCapture(1)
 
     grayscale = False
 

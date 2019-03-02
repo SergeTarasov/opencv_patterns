@@ -1,7 +1,9 @@
 import numpy as np
 from numpy.linalg import inv
 
+
 # why not the one from opencv? this implementation more flexible and could be easily changed.
+
 
 class Kalman:
     # np.eye( int, int, ... )
