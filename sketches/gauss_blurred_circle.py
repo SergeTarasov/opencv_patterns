@@ -38,7 +38,13 @@ class ProcessImage:
             center = (self.x, self.y)
 
             mask = np.zeros(self.image.shape[:2], dtype=np.uint8)
+            
             cv.circle(mask, center, self.radius, (255, 255, 255), -1)
+#             cv.rectangle(mask,
+#                          (max(0, self.x - self.radius), self.y - 20),
+#                          (max(0, self.x + self.radius), self.y + 20),
+#                          (255, 255, 255), -1)
+            
             gauss = cv.GaussianBlur(
                 res_image[
                     max(0, self.y-self.radius-1):self.y+self.radius+self.margin,
@@ -66,6 +72,8 @@ class ProcessImage:
 
 
 def main():
+    print('drag blurred area with the mouse, vary the radius with the scrollwheel')
+    
     process = ProcessImage()
     process.loop()
 
