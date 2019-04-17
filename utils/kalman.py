@@ -2,7 +2,8 @@ import numpy as np
 from numpy.linalg import inv
 
 
-# why not the one from opencv? this implementation more flexible and could be easily changed.
+# why not the one from opencv? this implementation is more flexible and could be easily changed.
+# also this should be changed to Extended or Unscented Kalman Filter
 
 
 class Kalman:
