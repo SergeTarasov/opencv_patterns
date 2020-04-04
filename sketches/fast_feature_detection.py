@@ -32,7 +32,7 @@ def main():
     # webcam
     filename = 0
 
-    fast_corners_detection(filename)
+    fast_feature_detection(filename)
 
 
 if __name__ == '__main__':

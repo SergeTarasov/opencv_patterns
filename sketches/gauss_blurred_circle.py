@@ -7,12 +7,12 @@ class ProcessImage:
     def __init__(self):
         self.x, self.y = 200, 200
 
-        self.image = cv.imread('../media/text_image_2.jpg')
-        self.image = cv.resize(self.image, None, fx=0.2, fy=0.2, interpolation=cv.INTER_CUBIC)
+        self.image = cv.imread('../media/sky.jpg')
+        # self.image = cv.resize(self.image, None, fx=0.2, fy=0.2, interpolation=cv.INTER_CUBIC)
         self.down = False
         
         self.margin = 10
-        self.radius = 150
+        self.radius = 100
         cv.namedWindow('image')
         cv.setMouseCallback('image', self.click_and_crop)
 
@@ -72,7 +72,7 @@ class ProcessImage:
 
 
 def main():
-    print('drag blurred area with the mouse, vary the radius with the scrollwheel')
+    print('drag blurred area with the mouse, vary the radius with the mousewheel. "q" to quit.')
     
     process = ProcessImage()
     process.loop()

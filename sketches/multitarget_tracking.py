@@ -60,10 +60,6 @@ class Tracker:
         self.counter = self.smooth
         self.kalman_filter_timeout = 100
 
-    def reinit(self, position, width, height, image):
-        self.frame.describe = False
-        self.__init__(position, width, height, image)
-
     def update(self, image):
 
         top = max(self.y - self.margin, 0)
@@ -202,7 +198,7 @@ class ProcessImage:
         cv.namedWindow('image')
         cv.setMouseCallback('image', self.click_and_crop)
 
-    def click_and_crop(self, event, x, y):
+    def click_and_crop(self, event, x, y, *_):
 
         if self.cropping:
             draw_rect(self.image, self.ref_pt[0], (x, y), (128, 0, 0))

@@ -9,7 +9,8 @@ def main():
     # Instead of MIL, you can also use
 
     tracker_types = ['BOOSTING', 'MIL', 'KCF', 'TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
-    tracker_type = tracker_types[2]
+    # tracker_type = tracker_types[2]
+    tracker_type = 'MOSSE'
 
     if tracker_type == 'BOOSTING':
         tracker = cv.TrackerBoosting_create()
