@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 
 from utils.kalman import Kalman
+from utils.figures import draw_dashed_line, draw_rect
 
 
 class Filter(Kalman):
@@ -18,13 +19,13 @@ class Filter(Kalman):
 
 
 class Target:
-    def __init__(self, position, ID):
+    def __init__(self, position, target_id):
         self.tracker = Filter(
             dynamic_parameters=position.shape[0] * 2,
             measure_parameters=position.shape[0],
             control_parameters=position.shape[0]
         )
-        self.ID = ID
+        self.ID = target_id
         self.position = np.array(position)
         self.estimation = np.array([])
         self.track = np.array([[0, 0]])
@@ -37,38 +38,6 @@ class Target:
     def upgrade(self, measurement):
         self.track = np.append(self.track, self.estimation.T, axis=0)
         self.tracker.correct(measurement[:, np.newaxis])
-
-
-def draw_dashed_line(image, pt1, pt2, color, thickness):
-    length = np.linalg.norm(np.array(pt1) - np.array(pt2))
-    dash_len = 10
-    number_of_dashes = int(length / dash_len)
-    if number_of_dashes % 2 != 0:
-        number_of_dashes += 1
-
-    x_dots = np.linspace(pt1[0], pt2[0], number_of_dashes, dtype=int)
-    y_dots = np.linspace(pt1[1], pt2[1], number_of_dashes, dtype=int)
-
-    var = 0
-    for i, (y, x) in enumerate(zip(y_dots, x_dots)):
-        if i == 0:
-            continue
-
-        if var == 0:
-            cv.line(image, (y_dots[i-1], x_dots[i-1]), (y, x), color, thickness)
-            var = 1
-        elif var == 1:
-            var = 0
-
-
-def draw_rect(image, pt1, pt2, color, thickness=1):
-    top, bottom = pt1[1], pt2[1]
-    left, right = pt1[0], pt2[0]
-
-    draw_dashed_line(image, (top, left),    (top, right),    color, thickness)
-    draw_dashed_line(image, (bottom, left), (bottom, right), color, thickness)
-    draw_dashed_line(image, (top, left),    (bottom, left),  color, thickness)
-    draw_dashed_line(image, (top, right),   (bottom, right), color, thickness)
 
 
 class Tracker:
@@ -233,7 +202,7 @@ class ProcessImage:
         cv.namedWindow('image')
         cv.setMouseCallback('image', self.click_and_crop)
 
-    def click_and_crop(self, event, x, y, flags, param):
+    def click_and_crop(self, event, x, y):
 
         if self.cropping:
             draw_rect(self.image, self.ref_pt[0], (x, y), (128, 0, 0))
