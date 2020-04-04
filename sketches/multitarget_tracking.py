@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
+
 from utils.kalman import Kalman
-import cProfile
 
 
 class Filter(Kalman):
@@ -259,9 +259,6 @@ class ProcessImage:
     def loop(self, write=False):
         paused = True
         frame_counter = 0
-        pr = cProfile.Profile()
-
-        pr.enable()
         while True:
             timer = cv.getTickCount()
             key = cv.waitKey(1)
@@ -328,9 +325,6 @@ class ProcessImage:
             cv.imshow('image', self.image)
             if write:
                 self.vid_out.write(self.image)
-
-        pr.disable()
-        pr.print_stats()
 
         self.vid_out.release()
         self.vid.release()
